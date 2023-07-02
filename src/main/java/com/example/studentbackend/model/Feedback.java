@@ -10,13 +10,10 @@ import lombok.Data;
 public class Feedback {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int feedbackId;
-    private String question;
+    public int feedbackId;
+    public String question;
 
-    @ManyToOne
-    @JoinColumn(name = "regnumber")
-    private Student student;
-
+    
     public int getFeedbackId() {
         return feedbackId;
     }
@@ -31,14 +28,6 @@ public class Feedback {
 
     public void setQuestion(String question) {
         this.question = question;
-    }
-
-    public Student getStudent() {
-        return student;
-    }
-
-    public void setStudent(Student student) {
-        this.student = student;
     }
 }
 

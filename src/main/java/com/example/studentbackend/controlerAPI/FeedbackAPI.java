@@ -1,3 +1,4 @@
+
 package com.example.studentbackend.controlerAPI;
 
 import com.example.studentbackend.model.Feedback;
@@ -13,7 +14,8 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping
+@RequestMapping("/Feedback")
+@CrossOrigin(origins = "http://localhost:3000")
 public class FeedbackAPI {
     @Autowired
     private FeedbackRepo feedbackRepo;
@@ -72,6 +74,22 @@ public class FeedbackAPI {
 
         }catch (Exception exception){
             return  new ResponseEntity<>("error",HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PutMapping("/update{feedbackId}")
+
+    public  ResponseEntity<?> edit (@PathVariable int feedbackId,@RequestBody Feedback feedback){
+        try {
+            if (feedbackRepo.findById(feedbackId).isPresent()){
+                feedback.setFeedbackId(feedbackId);
+                Feedback feedback1=feedbackRepo.save(feedback);
+                return  new ResponseEntity<>(feedback1,HttpStatus.OK);
+            }else {
+                return  new ResponseEntity<>("no data found",HttpStatus.NOT_FOUND);
+            }
+        }catch (Exception exception){
+            return  new ResponseEntity<>("error",HttpStatus.BAD_REQUEST);
         }
     }
 }

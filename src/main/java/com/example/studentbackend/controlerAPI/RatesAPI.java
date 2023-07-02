@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/Rates")
+@CrossOrigin(origins = "http://localhost:3000")
 public class RatesAPI {
 
     @Autowired
@@ -73,5 +74,21 @@ public class RatesAPI {
             return  new ResponseEntity<>("error",HttpStatus.NOT_FOUND);
         }
 
+}
+
+@PutMapping("/update{rateId}")
+    public  ResponseEntity<?> edit (@PathVariable int rateId,@RequestBody Rates rates){
+        try {
+            if (ratesRepo.findById(rateId).isPresent()){
+                rates.setRateId(rateId);
+                // rates.setRateId(rateId);
+                Rates rates1 =ratesRepo.save(rates);
+                return  new ResponseEntity<>(rates1,HttpStatus.OK);
+            }else {
+                return  new ResponseEntity<>("no data found",HttpStatus.NOT_FOUND);
+            }
+        }catch (Exception exception){
+            return  new ResponseEntity<>("error",HttpStatus.BAD_REQUEST);
+        }
 }
 }

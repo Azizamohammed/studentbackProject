@@ -10,12 +10,12 @@ public class Rates {
 
     private int  rateId;
 
-    private  int rateNumber;
-    private  int  feedId;
+    private  String rateStatus;
+
 
     @ManyToOne
     @JoinColumn(name = "feedbackId")
-    private Feedback feedback;
+    public Feedback feedback;
 
 
     public int getRateId() {
@@ -26,21 +26,14 @@ public class Rates {
         this.rateId = rateId;
     }
 
-    public int getRateNumber() {
-        return rateNumber;
+    public String getRateStatus() {
+        return rateStatus;
     }
 
     public void setRateNumber(int rateNumber) {
-        this.rateNumber = rateNumber;
+        this.rateStatus = rateStatus;
     }
 
-    public int getFeedId() {
-        return feedId;
-    }
-
-    public void setFeedId(int feedId) {
-        this.feedId = feedId;
-    }
 
     public Feedback getFeedback() {
         return feedback;

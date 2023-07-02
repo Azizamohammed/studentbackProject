@@ -13,6 +13,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/Administrator")
+@CrossOrigin(origins = "http://localhost:3000")
 public class AdminAPI {
 
 
@@ -66,7 +67,7 @@ public class AdminAPI {
 }
 
 
-@DeleteMapping("/byId{admId}")
+@DeleteMapping("/delete{admId}")
 
 
     public  ResponseEntity<?> delete (@PathVariable int admId){
@@ -75,6 +76,24 @@ public class AdminAPI {
             return  new ResponseEntity<>("not deleted",HttpStatus.OK);
         }catch (Exception exception){
             return  new ResponseEntity<>("error",HttpStatus.NOT_FOUND);
+        }
+}
+
+@PutMapping("/delete{admId}")
+
+    public  ResponseEntity<?> edit (@PathVariable int admId,@RequestBody Administrator administrator){
+        try {
+            if (adminRepo.findById(admId).isPresent()){
+                administrator.setAdmId(admId);
+                Administrator administrator1 =adminRepo.save(administrator);
+                return  new ResponseEntity<>(administrator1,HttpStatus.OK);
+            }else {
+                return  new ResponseEntity<>("no data found",HttpStatus.NOT_FOUND);
+            }
+        }catch (Exception exception){
+            return  new ResponseEntity<>("error",HttpStatus.BAD_REQUEST);
+            
+
         }
 }
 }
